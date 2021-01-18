@@ -16,7 +16,7 @@ class PlayController extends Controller
      */
     public function index()
     {
-        $plays = Play::paginate(10);
+        $plays = Play::paginate(25);
         return PlayResource::collection($plays);
     }
 
@@ -28,13 +28,18 @@ class PlayController extends Controller
      */
     public function store(Request $request)
     {
+        $title = $request->input('title');
+        $path = $request->input('path');
+
         $play = new Play();
-        $play->title = $request->title;
-        $play->path = $request->path;
-        if($play->save())
-        {
-            new PlayResource($play);
-        }
+        $play->title = $title;
+        $play->path = $path;
+        
+        $play->save();
+
+        return response()->json([
+            'message' => 'Play Created!'
+        ],200);
     }
 
     /**

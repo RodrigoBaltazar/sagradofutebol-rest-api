@@ -15,6 +15,8 @@ class CreatePlaysTable extends Migration
     {
         Schema::create('plays', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('path');
             $table->timestamps();
         });
     }

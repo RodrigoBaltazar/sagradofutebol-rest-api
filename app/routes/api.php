@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/plays', [PlayController::class, 'index']);
 
-Route::get('/play', [PlayController::class, 'store']);
+Route::POST('/play', [PlayController::class, 'store']);
 
 Route::get('/plays/{id}', [PlayController::class, 'show']);
 
