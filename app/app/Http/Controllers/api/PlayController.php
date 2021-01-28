@@ -28,8 +28,8 @@ class PlayController extends Controller
      */
     public function store(Request $request)
     {
-        $title = $request->input('title');
-        $path = $request->input('path');
+        $title = $request->input('title')->all();
+        $path = $request->input('path')->all();
 
         $play = new Play();
         $play->title = $title;
