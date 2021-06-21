@@ -1,5 +1,5 @@
 # sagradofutebol-rest-api
-rest api with php and laravel
+rest api with flask, sqlalchemy, mysql
 
 
 virtualenv rest-api
