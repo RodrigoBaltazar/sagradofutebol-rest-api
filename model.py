@@ -1,16 +1,8 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from app import db
 from datetime import datetime
-import pymysql
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sf:sf@localhost/sagradofutebol'
-pymysql.install_as_MySQLdb()
-
-db = SQLAlchemy(app)
-
 
 class User(db.Model):
+    __tablename__ = "User"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -19,8 +11,21 @@ class User(db.Model):
     fb_id = db.Column(db.String(255), unique=True, nullable=True)
     g_id = db.Column(db.String(255), unique=True, nullable=True)
     
+    def create(self):
+        db.session.add(self)
+        db.session.commit()
+        return self
+
+    def __init__(self, username, email, name, surname, fb_id, g_id):
+        self.username = username
+        self.email = email
+        self.name = name
+        self.surname = surname
+        self.fb_id = fb_id
+        self.g_id = g_id
+
     def __repr__(self):
-        return '<User %r>' % self.username
+        return f"{self.id}"
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,5 +37,6 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post %r>' % self.title
+
 
 db.create_all()
