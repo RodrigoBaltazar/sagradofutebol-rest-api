@@ -1,5 +1,18 @@
-from app import db
+import sqlalchemy
 from datetime import datetime
+from sqlalchemy.dialects.postgresql import JSON
+from app import db
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), nullable=False)
+    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    post_user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    votes = db.Column(db.Integer, nullable=True)
+    video_path = db.Column(db.String(255), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<Post %r>' % self.title
 
 class User(db.Model):
     __tablename__ = "User"
@@ -26,17 +39,3 @@ class User(db.Model):
 
     def __repr__(self):
         return f"{self.id}"
-
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), nullable=False)
-    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    post_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    votes = db.Column(db.Integer, nullable=True)
-    video_path = db.Column(db.String(255), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<Post %r>' % self.title
-
-
-db.create_all()
