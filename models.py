@@ -10,6 +10,7 @@ class Post(db.Model):
     votes = db.Column(db.Integer, nullable=True)
     video_path = db.Column(db.String(255), unique=True, nullable=True)
     #timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=True)
+    isPublished = db.Column(db.Boolean, default=False)
 
 class PostSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
