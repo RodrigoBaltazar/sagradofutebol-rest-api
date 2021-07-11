@@ -6,14 +6,14 @@ people data
 from flask import make_response, abort
 from config import db
 from models import Post, PostSchema
-
+import json
 
 def read_all():
     """
     This function responds to a request for /api/post
     with the complete lists of posts
 
-    :return:        json string of list of people
+    :return:        json string of list of post
     """
     # Create the list of posts from our data
     post = Post.query.order_by(Post.id).all()
@@ -21,7 +21,9 @@ def read_all():
     # Serialize the data for the response
     post_schema = PostSchema(many=True)
     data = post_schema.dump(post)
-    return data
+    for post in data:
+        return post
+
 
 
 def read_one(post_id):
