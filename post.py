@@ -21,9 +21,7 @@ def read_all():
     # Serialize the data for the response
     post_schema = PostSchema(many=True)
     data = post_schema.dump(post)
-    for post in data:
-        return post
-
+    return data
 
 
 def read_one(post_id):
